@@ -1,0 +1,119 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: scrumonline
+  namespace: support
+  labels:
+    app: scrumonline
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: scrumonline
+  strategy:
+    type: Recreate 
+  template:
+    metadata:
+      labels:
+        app: scrumonline
+    spec:
+      containers:
+        - name: scrumonline-app
+          image: 636126172793.dkr.ecr.ap-southeast-2.amazonaws.com/ecr-dev-scrumonline
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-port
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-database
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-password
+            - name: JIRA_BASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: jira-base-url
+            - name: JIRA_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: jira-username
+            - name: JIRA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: jira-password
+            - name: JIRA_PROJECT
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: jira-project
+            - name: JIRA_JQL
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: jira-jql
+          ports:
+            - containerPort: 80
+        - name: scrumonline-db
+          image: mysql:5
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-database
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: scrumonline
+                  key: db-password
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "true"
+          ports:
+            - containerPort: 3306
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: scrumonline
+  namespace: support
+spec:
+  type: LoadBalancer
+  selector:
+    app: scrumonline
+  ports:
+    - name: www
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+    - name: mysql
+      protocol: TCP
+      port: 3306
+      targetPort: 3306
+---
