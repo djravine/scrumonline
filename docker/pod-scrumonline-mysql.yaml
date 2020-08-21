@@ -75,28 +75,6 @@ spec:
                   key: jira-jql
           ports:
             - containerPort: 80
-        - name: scrumonline-db
-          image: mysql:5
-          env:
-            - name: MYSQL_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: scrumonline
-                  key: db-database
-            - name: MYSQL_USER
-              valueFrom:
-                secretKeyRef:
-                  name: scrumonline
-                  key: db-username
-            - name: MYSQL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: scrumonline
-                  key: db-password
-            - name: MYSQL_ALLOW_EMPTY_PASSWORD
-              value: "true"
-          ports:
-            - containerPort: 3306
 ---
 kind: Service
 apiVersion: v1
@@ -108,12 +86,8 @@ spec:
   selector:
     app: scrumonline
   ports:
-    - name: www
+    - name: http
       protocol: TCP
       port: 80
-      targetPort: 8080
-    - name: mysql
-      protocol: TCP
-      port: 3306
-      targetPort: 3306
+      targetPort: 80
 ---

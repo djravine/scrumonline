@@ -49,6 +49,7 @@ scrum.sources.push({
           });
           self.issues = response.data.issues;
           self.issue = self.issues[0];
+          self.jira_base_url = jira_base_url;
           self.loaded = true;
         }
       });

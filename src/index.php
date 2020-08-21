@@ -1,4 +1,26 @@
 <?php
+
+require_once __DIR__ . "/../vendor/autoload.php";
+
+// Load .env
+if (file_exists('.env')) {
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+  $dotenv->load();
+  $dotenv->required([
+    'BASE_URL',
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME',
+    'DB_PASSWORD',
+    'JIRA_BASE_URL',
+    'JIRA_USERNAME',
+    'JIRA_PASSWORD',
+    'JIRA_PROJECT',
+    'JIRA_JQL'
+  ]);
+}
+
 include "config.php";
 include "templates/templates.php";
 include "sponsors.php";
@@ -26,6 +48,10 @@ foreach($templates as $index=>$template)
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
     
   <script src="/js/modernizr-2.8.3.min.js"></script>
+
+  <script>
+    var jira_base_url = "<?php echo getenv('JIRA_BASE_URL'); ?>"
+  </script>
   
   <!-- Style sheets -->
   <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -38,7 +64,7 @@ foreach($templates as $index=>$template)
   <?php include("templates/cookie_notice.php") ?>
 
   <!-- AdSense code -->
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+  <!-- <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
 </head>
 <body ng-app="scrum-online">
 <!--[if lt IE 8]>
@@ -46,11 +72,11 @@ foreach($templates as $index=>$template)
 <![endif]-->
 
 <!--Github Fork Badge -->
-<div class="github-fork-ribbon-wrapper hidden-xs">
+<!-- <div class="github-fork-ribbon-wrapper hidden-xs">
   <div class="github-fork-ribbon">
     <a target="_blank" href="https://github.com/Toxantron/scrumonline">Fork me on GitHub</a>
   </div>
-</div>
+</div> -->
 
 <!-- Top navigation bar -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -78,15 +104,15 @@ foreach($templates as $index=>$template)
 <div class="container-fluid main" ng-view></div>
 
 <!-- Side banner -->
-<div id="banner_left" class="side-banner"></div>
-<div id="banner_right" class="side-banner"></div>
+<!-- <div id="banner_left" class="side-banner"></div>
+<div id="banner_right" class="side-banner"></div> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.min.js"></script>
-<script src="https://cdn.rawgit.com/showdownjs/showdown/1.8.6/dist/showdown.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>  
 <script src="/js/angular-google-analytics.js"></script>
 <script src="/js//bootstrap.min.js"></script>
 <script src="/js/J2M.js"></script>

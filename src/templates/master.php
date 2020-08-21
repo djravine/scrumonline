@@ -1,4 +1,25 @@
 <?php
+
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+// Load .env
+if (file_exists('../.env')) {
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
+  $dotenv->load();
+  $dotenv->required([
+    'BASE_URL',
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME',
+    'DB_PASSWORD',
+    'JIRA_BASE_URL',
+    'JIRA_USERNAME',
+    'JIRA_PASSWORD',
+    'JIRA_PROJECT',
+    'JIRA_JQL'
+  ]);
+}
 include __DIR__ . "/../config.php";
 
 ?>
@@ -118,7 +139,7 @@ $joinUrl = $joinUrl . "{{ master.joinFragment }}";
 </div>
 
 <!-- Instructions -->
-<div class="row">
+<!-- <div class="row">
   <article class="col-xs-12 col-lg-10 col-lg-offset-1">
     <h3>Invite Members</h3>
     <p>
@@ -187,4 +208,4 @@ $joinUrl = $joinUrl . "{{ master.joinFragment }}";
       member login and return anytime.
     </p>
   </article>
-</div>
+</div> -->

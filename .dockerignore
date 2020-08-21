@@ -1,0 +1,4 @@
+.vagrant/
+mysql_db
+src/.env
+src/config.php

@@ -10,6 +10,30 @@ case $command in
      # run container with entrypoint which prepares container
      docker run --rm --name scrumonline -v $(pwd):/var/www/scrumonline --entrypoint /var/www/scrumonline/build.sh scrum-lamp
      ;;
+  "build")
+     echo "Building docker image"
+     docker rmi scrum-lamp scrum-lamp-deploy
+     cd docker
+     docker build -t scrum-lamp -f Dockerfile .
+     cd ..
+     docker build -t scrum-lamp-deploy -f ./docker/Dockerfile-deploy .
+     ;;
+  "push")
+     echo "Pushing docker image"
+     aws ecr get-login-password --region ap-southeast-2 --profile developer | docker login --username AWS --password-stdin 636126172793.dkr.ecr.ap-southeast-2.amazonaws.com/ecr-dev-scrumonline
+     docker tag scrum-lamp-deploy 636126172793.dkr.ecr.ap-southeast-2.amazonaws.com/ecr-dev-scrumonline:latest
+     docker push 636126172793.dkr.ecr.ap-southeast-2.amazonaws.com/ecr-dev-scrumonline:latest
+     ;;
+  "secret")
+     echo "Deploying secret to kubernetes"
+     kubectl apply --wait -f ./docker/secret-scrumonline.yaml
+     ;;
+  "deploy")
+     echo "Deploying to kubernetes"
+     kubectl apply --wait -f ./docker/pod-scrumonline-mysql.yaml
+     kubectl -n support rollout restart deployment scrumonline
+     kubectl -n support rollout status deployment scrumonline
+     ;;
   "start")
      running=$(docker ps -a -q | grep $container_name)
      if [ -n "$running" ]; then

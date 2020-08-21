@@ -4,3 +4,4 @@ src/config.php
 proxies/
 .vagrant/
 mysql_db
+.env

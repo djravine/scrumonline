@@ -4,7 +4,7 @@
     <div class="row" ng-if="master.current.error">
       <div class="alert alert-danger">{{master.current.error}}</div>
     </div>
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
           <label>JIRA base url:</label>
@@ -40,32 +40,37 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-default" ng-click="master.current.load()">Load issues</button>
+    <button class="btn btn-default" ng-click="master.current.load()">Load issues</button> -->
+    <div class="col-xs-12">
+      <button class="btn btn-default btn-block" ng-click="master.current.load()">Load issues</button>
+    </div>
   </form>
 </div>
 
 <!-- Screen after static process was completed -->
 <div ng-if="master.current.loaded">
   <div class="row form-group">
-    <div class="col-xs-6 col-xs-offset-3 col-md-6 col-md-offset-3">
-      <button class="btn btn-default btn-block" ng-click="master.current.reload()" ga-track-event="master.current.event">Reload</button>
+    <div class="col-xs-12">
+      <!-- <button class="btn btn-default btn-block" ng-click="master.current.reload()" ga-track-event="master.current.event">Reload</button> -->
+      <button class="btn btn-default btn-block" ng-click="master.current.load()">Reload issues</button>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-5">
       <div class="list-group issue-list">
-        <a  ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
-          {{ issue.key }}: {{ issue.fields.summary }}
+        <a ng-repeat="issue in master.current.issues track by issue.id" class="selectable list-group-item" ng-class="{active: master.current.issue == issue}" ng-click="master.current.issue = issue">
+          <img class="priority" src="{{ issue.fields.priority.iconUrl }}" title="{{ issue.fields.priority.name }}" alt="{{ issue.fields.priority.name }}" /> <strong><em>{{ issue.key }}:</em></strong> {{ issue.fields.summary }}
         </a>
       </div>
     </div>
-    <div class="col-xs-8">
+    <div class="col-xs-7">
       <div class="row">
-        <div class="col-xs-1">
-          <img src="{{ master.current.issue.fields.creator.avatarUrls['48x48'] }}" alt="{{ master.current.issue.field.creator.displayName }}" />
-        </div>
-        <div class="col-xs-11">
-          <h2><a href="{{ master.current.base_url }}/browse/{{ master.current.issue.key }}" target="_blank">{{ master.current.issue.key }}</a>: {{ master.current.issue.fields.summary }}</h2>
+        <div class="col-xs-12 issue-title">
+          <h2>
+            <img class="profile" src="{{ master.current.issue.fields.creator.avatarUrls['48x48'] }}" alt="{{ master.current.issue.field.creator.displayName }}" />
+            <img class="priority" src="{{ master.current.issue.fields.priority.iconUrl }}" title="{{ master.current.issue.fields.priority.name }}" alt="{{ master.current.issue.fields.priority.name }}" />
+            <strong><em><a href="{{ master.current.jira_base_url }}/browse/{{ master.current.issue.key }}" target="_blank">{{ master.current.issue.key }}</a>:</em></strong> {{ master.current.issue.fields.summary }}
+          </h2>
         </div>
       </div>
 
@@ -76,7 +81,7 @@
         <div class="panel-body" style="white-space: pre-line" ng-bind-html="master.current.issue.fields.description"></div>
       </div>
 
-      <button class="btn btn-default" ng-click="master.startPoll(master.current.issue.key + ' ' + master.current.issue.fields.summary, master.current.issue.fields.description, master.current.base_url + '/browse/' + master.current.issue.key)" ga-track-event="master.current.event">Start</button>
+      <button class="btn btn-default" ng-click="master.startPoll('<img class=&quot;priority&quot; src=&quot;' + master.current.issue.fields.priority.iconUrl + '&quot; title=&quot;' + master.current.issue.fields.priority.name + '&quot; alt=&quot;' + master.current.issue.fields.priority.name + '&quot; /><strong><em>' + master.current.issue.key + ':</em></strong> ' + master.current.issue.fields.summary, master.current.issue.fields.description, master.current.base_url + '/browse/' + master.current.issue.key)" ga-track-event="master.current.event">Start</button>
     </div>
   </div>
 </div>

@@ -1,4 +1,25 @@
-<?php 
+<?php
+
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+// Load .env
+if (file_exists('../.env')) {
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
+  $dotenv->load();
+  $dotenv->required([
+    'BASE_URL',
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME',
+    'DB_PASSWORD',
+    'JIRA_BASE_URL',
+    'JIRA_USERNAME',
+    'JIRA_PASSWORD',
+    'JIRA_PROJECT',
+    'JIRA_JQL'
+  ]);
+}
 include __DIR__ . "/../config.php";
 
 ?>
@@ -6,7 +27,7 @@ include __DIR__ . "/../config.php";
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="row">
-      <a ng-href="{{member.topicUrl}}" target="_blank"><h2 class="col-xs-10" ng-bind="member.topic"></h2></a>
+      <a ng-href="{{member.topicUrl}}" target="_blank"><h2 class="col-xs-10" ng-bind-html="member.topic"></h2></a>
       <div class="col-xs-2">
         <div class="leave remove selectable" ng-click="member.leave()">
           <span class="glyphicon glyphicon-remove"></span>
@@ -31,7 +52,7 @@ include __DIR__ . "/../config.php";
   </div>
 </div>
 
-<div class="row">
+<!-- <div class="row">
   <article class="col-xs-12 col-lg-10 col-lg-offset-1">
   <h3>How to:</h3>
   <p>The panel at the top displays the current feature for estimation. The description below might help in deciding on an estimate for its complexity. 
@@ -49,4 +70,4 @@ include __DIR__ . "/../config.php";
     this session until the master restarts the estimation. If your vote on the master view is highlighted in red, it means you either gave the highest or
     lowest estimation. In that case explain the decision to you team members. After all arguments were heared your scrum master or product owner can start
     a new poll until you reach a consensus or verbally agree on a value withot voting again.</p>
-</div>
+</div> -->

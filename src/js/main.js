@@ -96,6 +96,9 @@ var scrum = {
 // Define angular app
 scrum.app = angular.module('scrum-online', ['ngRoute', 'ngSanitize', 'ngCookies', 'angular-google-analytics']);
 
+// Unsafe HTML filter
+scrum.app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
+
 //------------------------------
 // Configure routing
 // -----------------------------
@@ -632,7 +635,7 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
         self.reset();
         self.topic = result.topic;
         self.description = result.description || '';
-        self.topicUrl = result.url || '#';
+        self.topicUrl = jira_base_url + result.url || '#';
       }
       
       self.votable = result.votable;

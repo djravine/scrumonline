@@ -1,14 +1,35 @@
 <?php
+
 // bootstrap.php
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\Proxy\AbstractProxyFactory;
 
 require_once __DIR__ . "/../vendor/autoload.php";
+
+// Load .env
+if (file_exists('.env')) {
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+  $dotenv->load();
+  $dotenv->required([
+    'BASE_URL',
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME',
+    'DB_PASSWORD',
+    'JIRA_BASE_URL',
+    'JIRA_USERNAME',
+    'JIRA_PASSWORD',
+    'JIRA_PROJECT',
+    'JIRA_JQL'
+  ]);
+}
+
 require_once __DIR__ . "/config.php";
 
 // Create a simple "default" Doctrine ORM configuration for Annotations
-$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/model"));
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__ . "/model"));
 $config->setAutoGenerateProxyClasses(AbstractProxyFactory::AUTOGENERATE_NEVER);
 $config->setProxyDir(__DIR__ . '/proxies');
 
@@ -30,22 +51,22 @@ class ControllerBase
 
   // Configured cards sets
   public $cardSets;
-  
+
   function __construct($entityManager, $cardSets = [])
   {
     $this->entityManager = $entityManager;
     $this->cardSets = $cardSets;
   }
-  
+
   // Get session by id
   protected function getSession($id)
   {
     $session = $this->entityManager->find("Session", $id);
-    if($session == null)
+    if ($session == null)
       throw new Exception("Unknown session id!");
     return $session;
   }
-  
+
   // Get member by id
   protected function getMember($id)
   {
@@ -58,27 +79,26 @@ class ControllerBase
   {
     return $this->cardSets[$session->getCardSet()];
   }
-  
+
   protected function jsonInput()
   {
     $post = file_get_contents('php://input');
     $data = json_decode($post, true);
 
-	 return $data;
+    return $data;
   }
-  
+
   // Save only a single entity
   protected function save($entity)
   {
     $this->entityManager->persist($entity);
     $this->entityManager->flush();
   }
-  
+
   // Save an array of entities
   protected function saveAll(array $entities)
   {
-    foreach($entities as $entity)
-    {
+    foreach ($entities as $entity) {
       $this->entityManager->persist($entity);
     }
     $this->entityManager->flush();
@@ -124,7 +144,7 @@ class ControllerBase
     $tokenKey = $this->tokenKey($session->getId());
     if (!isset($_COOKIE[$tokenKey]))
       return false;
-    
+
     // Verify token
     $token = $_COOKIE[$tokenKey];
     if ($token == $session->getToken())

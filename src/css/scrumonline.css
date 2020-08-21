@@ -301,7 +301,8 @@ div.removal {
  * Plugin styles
  */
 div.issue-list {
-  max-height: 800px;
+  /* max-height: 800px; */
+  max-height: 400px;
   overflow-y: scroll;
 }
 
@@ -394,4 +395,17 @@ div.donor {
   width: 100;
   text-align: center;
   font-weight: bold;
+}
+img.profile {
+  width: 40px;
+}
+img.priority {
+  width: 20px;
+}
+h2.ng-binding img.priority {
+  width: 30px;
+}
+.issue-title {
+  padding-left: 100px;
+  text-indent: -85px;
 }

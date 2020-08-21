@@ -1,5 +1,27 @@
 <?php
+
+require_once __DIR__ . "/../../vendor/autoload.php";
+
+// Load .env
+if (file_exists('../.env')) {
+  $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/../");
+  $dotenv->load();
+  $dotenv->required([
+    'BASE_URL',
+    'DB_HOST',
+    'DB_PORT',
+    'DB_DATABASE',
+    'DB_USERNAME',
+    'DB_PASSWORD',
+    'JIRA_BASE_URL',
+    'JIRA_USERNAME',
+    'JIRA_PASSWORD',
+    'JIRA_PROJECT',
+    'JIRA_JQL'
+  ]);
+}
 include "config.php";
+
 ?>
 <!-- Introduction -->
 <div class="row">
