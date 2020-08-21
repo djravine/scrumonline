@@ -81,6 +81,9 @@ apiVersion: v1
 metadata:
   name: scrumonline
   namespace: support
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:ap-southeast-2:636126172793:certificate/513a925d-909e-4bbe-b73e-3c8c7a9844d7
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: '443'
 spec:
   type: LoadBalancer
   selector:
@@ -89,5 +92,9 @@ spec:
     - name: http
       protocol: TCP
       port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
       targetPort: 80
 ---
