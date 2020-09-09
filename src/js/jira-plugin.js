@@ -44,8 +44,14 @@ scrum.sources.push({
           var converter = new showdown.Converter();
           // Convert JIRA format to Markdown and then to HTML
           response.data.issues.forEach(function(issue) {
-            var markdown = J2M.toM(issue.fields.description || '');
-            issue.fields.description = converter.makeHtml(markdown);
+            var md_desc = J2M.toM(issue.fields.description || '');
+            issue.fields.description = converter.makeHtml(md_desc.trim());
+            var md_accr = J2M.toM(issue.fields.customfield_11482 || '');
+            issue.fields.customfield_11482 = converter.makeHtml(md_accr.trim());
+            var md_imno = J2M.toM(issue.fields.customfield_11483 || '');
+            issue.fields.customfield_11483 = converter.makeHtml(md_imno.trim());
+            var md_usca = J2M.toM(issue.fields.customfield_11486 || '');
+            issue.fields.customfield_11486 = converter.makeHtml(md_usca.trim());
           });
           self.issues = response.data.issues;
           self.issue = self.issues[0];

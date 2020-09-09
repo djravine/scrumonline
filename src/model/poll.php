@@ -20,6 +20,15 @@ class Poll
     /** @Column(type="text") **/
     protected $description;
 
+    /** @Column(type="text") **/
+    protected $customfield_11482;
+
+    /** @Column(type="text") **/
+    protected $customfield_11483;
+
+    /** @Column(type="text") **/
+    protected $customfield_11486;
+
     /** @Column(type="string") **/
     protected $url;
   
@@ -74,6 +83,36 @@ class Poll
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    // Getter and setter for customfield_11482 field
+    public function getCustomfield_11482()
+    {
+        return $this->customfield_11482;
+    }
+    public function setCustomfield_11482($customfield_11482)
+    {
+        $this->customfield_11482 = $customfield_11482;
+    }
+
+    // Getter and setter for customfield_11483 field
+    public function getCustomfield_11483()
+    {
+        return $this->customfield_11483;
+    }
+    public function setCustomfield_11483($customfield_11483)
+    {
+        $this->customfield_11483 = $customfield_11483;
+    }
+
+    // Getter and setter for customfield_11486 field
+    public function getCustomfield_11486()
+    {
+        return $this->customfield_11486;
+    }
+    public function setCustomfield_11486($customfield_11486)
+    {
+        $this->customfield_11486 = $customfield_11486;
     }
 
     // Getter and setter for start time

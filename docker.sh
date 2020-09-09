@@ -8,7 +8,7 @@ case $command in
   "prepare")
      echo "Preparing repository for usage with docker"
      # run container with entrypoint which prepares container
-     docker run --rm --name scrumonline -v $(pwd):/var/www/scrumonline --entrypoint /var/www/scrumonline/build.sh scrum-lamp
+     docker run --rm --name scrumonline -v $(pwd):/var/www/scrumonline --entrypoint /var/www/scrumonline/build-with-env.sh scrum-lamp
      ;;
   "build")
      echo "Building docker image"
@@ -45,11 +45,11 @@ case $command in
      echo "Starting container $container_name..."
      mysql_dir=$2
      if [ -n "$mysql_dir" ]; then     
-        docker run -d --name $container_name -p 8080:80 -p 3306:3306 \
+        docker run -d --name $container_name -p 8080:80 -p 3306:3306 --env-file $current_dir/src/.env \
                     -v $current_dir:/var/www/scrumonline -v $current_dir/$mysql_dir:/var/lib/mysql \
                     $image
      else
-        docker run -d --name $container_name -p 8080:80 -p 3306:3306 \
+        docker run -d --name $container_name -p 8080:80 -p 3306:3306 --env-file $current_dir/src/.env \
                     -v $current_dir:/var/www/scrumonline $image
      fi                
      echo "...done!"

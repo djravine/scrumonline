@@ -15,7 +15,7 @@ class JiraController extends ControllerBase
 
         $jiraUrl = $parameters['base_url'] . '/rest/api/2/search?jql=project=' . $parameters['project'];
         if ($parameters['jql']) {
-            $jiraUrl .= ' and ' . $parameters['jql'];
+            $jiraUrl .= ' and ' . str_replace( "'", "", $parameters['jql']);
         }
 
         if (substr_count(strtolower($parameters['jql']), "order by") == 0 && substr_count(strtolower($parameters['jql']), "order%20by") == 0) {
