@@ -29,6 +29,12 @@ class Poll
     /** @Column(type="text") **/
     protected $customfield_11486;
 
+    /** @Column(type="text") **/
+    protected $priorityname;
+
+    /** @Column(type="text") **/
+    protected $priorityiconurl;
+
     /** @Column(type="string") **/
     protected $url;
   
@@ -113,6 +119,26 @@ class Poll
     public function setCustomfield_11486($customfield_11486)
     {
         $this->customfield_11486 = $customfield_11486;
+    }
+
+    // Getter and setter for priorityname field
+    public function getPriorityname()
+    {
+        return $this->priorityname;
+    }
+    public function setPriorityname($priorityname)
+    {
+        $this->priorityname = $priorityname;
+    }
+
+    // Getter and setter for priorityiconurl field
+    public function getPriorityiconurl()
+    {
+        return $this->priorityiconurl;
+    }
+    public function setPriorityiconurl($priorityiconurl)
+    {
+        $this->priorityiconurl = $priorityiconurl;
     }
 
     // Getter and setter for start time

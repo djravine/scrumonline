@@ -411,8 +411,8 @@ scrum.app.controller('MasterController', function ($http, $routeParams, $locatio
   }
   
   // Starting a new poll
-  this.startPoll = function (topic, description, url, customfield_11482, customfield_11483, customfield_11486) {
-    $http.post('/api/poll/topic/' + self.id, { topic: topic || 'No Topic', description:description || '', url:url || '', customfield_11482:customfield_11482 || '', customfield_11483:customfield_11483 || '', customfield_11486:customfield_11486 || '' }).then(function(response) {
+  this.startPoll = function (topic, description, url, customfield_11482, customfield_11483, customfield_11486, priorityname, priorityiconurl) {
+    $http.post('/api/poll/topic/' + self.id, { topic: topic || 'No Topic', description:description || '', url:url || '', customfield_11482:customfield_11482 || '', customfield_11483:customfield_11483 || '', customfield_11486:customfield_11486 || '', priorityname:priorityname || '', priorityiconurl:priorityiconurl || '' }).then(function(response) {
       // Reset our GUI
       for(var index=0; index < self.votes.length; index++)
       {
@@ -551,6 +551,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
   this.customfield_11482 = '';
   this.customfield_11483 = '';
   this.customfield_11486 = '';
+  this.priorityname = '';
+  this.priorityiconurl = '';
   this.topicUrl = '';
   this.cards = [];
 
@@ -641,6 +643,8 @@ scrum.app.controller('MemberController', function MemberController ($http, $loca
         self.customfield_11482 = result.customfield_11482 || '';
         self.customfield_11483 = result.customfield_11483 || '';
         self.customfield_11486 = result.customfield_11486 || '';
+        self.priorityname = result.priorityname || '';
+        self.priorityiconurl = result.priorityiconurl || '';
         self.topicUrl = jira_base_url + result.url || '#';
       }
       

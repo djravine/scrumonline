@@ -397,7 +397,7 @@ div.donor {
   font-weight: bold;
 }
 img.profile {
-  width: 40px;
+  width: 20px;
 }
 img.priority {
   width: 20px;
@@ -408,4 +408,11 @@ h2.ng-binding img.priority {
 .issue-title {
   padding-left: 100px;
   text-indent: -85px;
+}
+.issue-heading {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.slim {
+  padding: 5px;
 }

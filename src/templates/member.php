@@ -27,11 +27,16 @@ include __DIR__ . "/../config.php";
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="row">
-      <a ng-href="{{member.topicUrl}}" target="_blank"><h2 class="col-xs-11" ng-bind-html="member.topic"></h2></a>
-      <div class="col-xs-1">
-        <div class="leave remove selectable" ng-click="member.leave()">
-          <span class="glyphicon glyphicon-remove"></span>
-        </div>
+      <div class="col-xs-12">
+        <button type="button" class="btn btn-large btn-danger pull-right" aria-label="Close" ng-click="member.leave()"> 
+          <span aria-hidden="true"><strong>X</strong></span> 
+        </button>
+        <h2 class="issue-heading">
+          <a ng-href="{{member.topicUrl}}" target="_blank">
+            <img class="priority" ng-src="{{member.priorityiconurl}}" title="{{member.priorityname}}" alt="{{member.priorityname}}" />
+            <span ng-bind-html="member.topic"></span>
+          </a>
+        </h2>
       </div>
     </div>
   </div>

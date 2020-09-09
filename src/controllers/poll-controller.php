@@ -149,6 +149,8 @@ class PollController extends ControllerBase
       $response->customfield_11482 = "";
       $response->customfield_11483 = "";
       $response->customfield_11486 = "";
+      $response->priorityname = "";
+      $response->priorityiconurl = "";
       $response->url = "";
       $response->flipped = false;
       $response->consensus = false;
@@ -160,6 +162,8 @@ class PollController extends ControllerBase
       $response->customfield_11482 = $currentPoll->getCustomfield_11482();
       $response->customfield_11483 = $currentPoll->getCustomfield_11483();
       $response->customfield_11486 = $currentPoll->getCustomfield_11486();
+      $response->priorityname = $currentPoll->getPriorityname();
+      $response->priorityiconurl = $currentPoll->getPriorityiconurl();
       $response->url = $currentPoll->getUrl();
       $response->flipped = $currentPoll->getResult() >= 0;
       $response->consensus = $currentPoll->getConsensus();
@@ -194,7 +198,7 @@ class PollController extends ControllerBase
     if ($method == "POST")
     {
       $data = $this->jsonInput();
-      $this->startPoll($session, $data["topic"], $data["description"], $data["url"], $data["customfield_11482"], $data["customfield_11483"], $data["customfield_11486"]);
+      $this->startPoll($session, $data["topic"], $data["description"], $data["url"], $data["customfield_11482"], $data["customfield_11483"], $data["customfield_11486"], $data["priorityname"], $data["priorityiconurl"]);
       return null;
     }
 
@@ -221,6 +225,8 @@ class PollController extends ControllerBase
         $result->customfield_11482 = "";
         $result->customfield_11483 = "";
         $result->customfield_11486 = "";
+        $result->priorityname = "";
+        $result->priorityiconurl = "";
         $result->url = "";
         $result->votable = false;
     }
@@ -231,6 +237,8 @@ class PollController extends ControllerBase
         $result->customfield_11482 = $currentPoll->getCustomfield_11482();
         $result->customfield_11483 = $currentPoll->getCustomfield_11483();
         $result->customfield_11486 = $currentPoll->getCustomfield_11486();
+        $result->priorityname = $currentPoll->getPriorityname();
+        $result->priorityiconurl = $currentPoll->getPriorityiconurl();
         $result->url = $currentPoll->getUrl();
         $result->votable = $currentPoll->getResult() < 0;
     }
@@ -239,7 +247,7 @@ class PollController extends ControllerBase
   }
 
   // Start a new poll in the session
-  private function startPoll($session, $topic, $description, $url, $customfield_11482, $customfield_11483, $customfield_11486)
+  private function startPoll($session, $topic, $description, $url, $customfield_11482, $customfield_11483, $customfield_11486, $priorityname, $priorityiconurl)
   {
     // Only the sessions main token holder can start a poll
     if (!$this->verifyToken($session))
@@ -252,6 +260,8 @@ class PollController extends ControllerBase
     $poll->setCustomfield_11482($customfield_11482);
     $poll->setCustomfield_11483($customfield_11483);
     $poll->setCustomfield_11486($customfield_11486);
+    $poll->setPriorityname($priorityname);
+    $poll->setPriorityiconurl($priorityiconurl);
     $poll->setUrl($url);
     $poll->setSession($session);   
     $poll->setResult(-1);   
