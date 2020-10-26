@@ -50,7 +50,7 @@ foreach($templates as $index=>$template)
   <script src="/js/modernizr-2.8.3.min.js"></script>
 
   <script>
-    var jira_base_url = "<?php echo getenv('JIRA_BASE_URL'); ?>"
+    var jira_base_url = "<?php echo getenv('JIRA_BASE_URL'); ?>";
     var jira_project = "<?php echo getenv('JIRA_PROJECT'); ?>";
     var jira_jql = <?php echo getenv('JIRA_JQL'); ?>;
   </script>
