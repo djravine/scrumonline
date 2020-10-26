@@ -51,6 +51,8 @@ foreach($templates as $index=>$template)
 
   <script>
     var jira_base_url = "<?php echo getenv('JIRA_BASE_URL'); ?>"
+    var jira_project = "<?php echo getenv('JIRA_PROJECT'); ?>";
+    var jira_jql = <?php echo getenv('JIRA_JQL'); ?>;
   </script>
   
   <!-- Style sheets -->

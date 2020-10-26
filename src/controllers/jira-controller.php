@@ -10,10 +10,9 @@ class JiraController extends ControllerBase
     {
         global $jiraConfiguration;
 
-        // $parameters = array_merge((array) $jiraConfiguration, $_POST);
-        $parameters = $jiraConfiguration;
+        $parameters = array_merge((array) $jiraConfiguration, $_POST);
 
-        $jiraUrl = $parameters['base_url'] . '/rest/api/2/search?jql=project=' . $parameters['project'];
+        $jiraUrl = $jiraConfiguration['base_url'] . '/rest/api/2/search?jql=project=' . $parameters['project'];
         if ($parameters['jql']) {
             $jiraUrl .= ' and ' . str_replace( "'", "", $parameters['jql']);
         }
@@ -25,11 +24,9 @@ class JiraController extends ControllerBase
 
         $client = new GuzzleHttp\Client();
         $res = $client->request('GET', $jiraUrl, [
-            'auth' => [$parameters['username'], $parameters['password']]
-            // 'user' => [$parameters['username'] . ':' . $parameters['password']]
+            'auth' => [$jiraConfiguration['username'], $jiraConfiguration['password']]
         ]);
-        $response = json_decode($res->getBody()->getContents(), true);
-        return $response;
+        return json_decode($res->getBody()->getContents(), true);
     }
 }
 

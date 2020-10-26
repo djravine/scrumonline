@@ -7,7 +7,10 @@ scrum.sources.push({
   position: 3,
   view: "templates/jira_source.html",
   feedback: false,
-  jql: 'issuetype=story and status=backlog',
+  base_url: jira_base_url,
+  project: jira_project,
+  jql: jira_jql,
+  // jql: 'issuetype=story and status=backlog',
   // Feedback call for completed poll
   completed: function(result) {
   },
@@ -23,8 +26,6 @@ scrum.sources.push({
 
     var queryParameters = $.param({
       base_url: this.base_url,
-      username: this.username,
-      password: this.password,
       project: this.project,
       jql: this.jql
     });

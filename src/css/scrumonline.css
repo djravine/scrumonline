@@ -55,9 +55,19 @@ div.topic .form-control {
     width: 500px;
  }
 }
+@media(min-width: 1200px)
+{
+  div.topic .form-control.wide {
+    width: 100%;
+ }
+}
 
 .selectable {
   cursor: pointer;
+}
+
+.display-none {
+  display:none;
 }
 
 /*
